@@ -10,6 +10,7 @@ import datetime
 
 camera = PiCamera()
 
+# Put your own directory here:
 image_base = "/home/tero/cam/"
 latest_image_path = image_base + "latest.jpg"
 prev_image = None

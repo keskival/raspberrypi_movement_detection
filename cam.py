@@ -15,7 +15,7 @@ image_base = "/home/tero/cam/"
 latest_image_path = image_base + "latest.jpg"
 prev_image = None
 
-threshold = 0.96
+threshold = 0.90
 
 ind = 0
 pix_per_detection = 2
@@ -33,16 +33,16 @@ while True:
             detected_counter = pix_per_detection
             ts = time.time()
             st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-            cv2.imwrite(image_base + st + "_" + str(ind) + ".png", latest_image)
+            cv2.imwrite(image_base + st + "_" + str(ind) + "_" + str(sim) + ".png", latest_image)
             cv2.imwrite(image_base + "latest_snap.png", latest_image)
             ind = ind + 1
             prev_image = latest_image
-        if detected_counter > 0:
+        elif detected_counter > 0:
             print "Detected counter: ", detected_counter
             detected_counter = detected_counter - 1
             ts = time.time()
             st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-            cv2.imwrite(image_base + st + "_" + str(ind) + ".png", latest_image)
+            cv2.imwrite(image_base + st + "_" + str(ind) + "_" + str(sim) + ".png", latest_image)
             ind = ind + 1
     else:
         prev_image = latest_image

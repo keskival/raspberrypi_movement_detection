@@ -1,30 +1,30 @@
 #!/usr/bin/python
 from picamera import PiCamera
 from time import sleep
-from skimage.measure import structural_similarity as ssim
+from skimage.measure import compare_ssim as ssim
 import numpy as np
 import cv2
 from skimage import color
 import time
 import datetime
 
-camera = PiCamera()
+with PiCamera() as camera:
+  time.sleep(2)
+  # Put your own directory here:
+  image_base = "/home/pi/cam/"
+  latest_image_path = image_base + "latest.jpg"
+  prev_image = None
 
-# Put your own directory here:
-image_base = "/home/tero/cam/"
-latest_image_path = image_base + "latest.jpg"
-prev_image = None
+  threshold = 0.90
 
-threshold = 0.90
+  ind = 0
+  pix_per_detection = 2
+  detected_counter = 0
 
-ind = 0
-pix_per_detection = 2
-detected_counter = 0
-
-while True:
+  while True:
     camera.capture(latest_image_path)
     latest_image = cv2.imread(latest_image_path)
-    if prev_image != None:
+    if prev_image is not None:
         prev_grey_image = color.rgb2gray(prev_image)
         latest_grey_image = color.rgb2gray(latest_image)
         sim = ssim(prev_grey_image, latest_grey_image)
